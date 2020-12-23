@@ -131,7 +131,7 @@ CREATE TABLE fournisseur(
    FOREIGN KEY(id_cat_four) REFERENCES categorie_fournisseur(id_cat_four)
 );
 
-CREATE TABLE compte(
+CREATE TABLE compter(
    id_article DECIMAL(7,0),
    prixht_article CURRENCY,
    id_stock DECIMAL(7,0),
@@ -174,7 +174,7 @@ CREATE TABLE facturer(
    FOREIGN KEY(id_regl) REFERENCES reglement(id_regl)
 );
 
-CREATE TABLE donne(
+CREATE TABLE donner(
    id_commercial DECIMAL(3,0),
    reduc_commercial DECIMAL(2,0),
    id_com DECIMAL(7,0) NOT NULL,
@@ -199,7 +199,7 @@ CREATE TABLE etablir(
    FOREIGN KEY(id_liv_four) REFERENCES livraison_four(id_liv_four)
 );
 
-CREATE TABLE demande(
+CREATE TABLE demander(
    id_four DECIMAL(7,0),
    id_com_four DECIMAL(7,0),
    PRIMARY KEY(id_four, id_com_four),
@@ -219,7 +219,7 @@ CREATE TABLE envoyer(
    FOREIGN KEY(id_com_four) REFERENCES commande_fournisseur(id_com_four)
 );
 
-CREATE TABLE rajoute(
+CREATE TABLE rajouter(
    id_article DECIMAL(7,0),
    prixht_article CURRENCY,
    quantite_liv_depot DECIMAL(15,0),
