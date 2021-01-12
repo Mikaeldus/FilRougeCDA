@@ -79,15 +79,15 @@ CREATE TABLE client(
    FOREIGN KEY(Id_cat_client) REFERENCES categorie(Id_cat_client)
 );
 
-CREATE TABLE facturer(
-   Id_facturer INT AUTO_INCREMENT,
+CREATE TABLE facture(
+   Id_facture INT AUTO_INCREMENT,
    num_facture INT,
    fact_facture VARCHAR(50),
    prixht_facture DECIMAL(15,2),
    date_facture DATE,
    prixttc_facture DECIMAL(15,2),
    Id_com INT NOT NULL,
-   PRIMARY KEY(Id_facturer),
+   PRIMARY KEY(Id_facture),
    UNIQUE(Id_com),
    FOREIGN KEY(Id_com) REFERENCES commande(Id_com)
 );
@@ -115,12 +115,12 @@ CREATE TABLE fournir(
 
 CREATE TABLE livrer(
    ref_article VARCHAR(20),
-   Id_facturer INT,
+   Id_facture INT,
    adresse_livraison VARCHAR(50),
    adresse_facturation VARCHAR(50),
-   PRIMARY KEY(ref_article, Id_facturer),
+   PRIMARY KEY(ref_article, Id_facture),
    FOREIGN KEY(ref_article) REFERENCES article(ref_article),
-   FOREIGN KEY(Id_facturer) REFERENCES facturer(Id_facturer)
+   FOREIGN KEY(Id_facture) REFERENCES facture(Id_facture)
 );
 
 CREATE TABLE passer(

@@ -41,7 +41,7 @@ VALUES (6, 6),
 	(4, 5),
        (3, 4);
 
-INSERT INTO facturer (Id_facturer, num_facture, fact_facture, prixht_facture, date_facture, prixttc_facture, Id_com)
+INSERT INTO facture (Id_facture, num_facture, fact_facture, prixht_facture, date_facture, prixttc_facture, Id_com)
 VALUES (NULL, 0101, '', 145, '2014-02-14', 131, 1),
 	(NULL, 0102, '', 475, '2020-01-12', 461, 2),
        (NULL, 0103, '', 146, '2019-11-10', 135, 3),
@@ -66,7 +66,7 @@ VALUES ('REF0001', '', 'boulon', 'Boite de 26 boulons zinc tête ronde collet ca
        ('REF0012', '', 'boite au lettre', 'Boite à colis DECAYEUX @Box 950 gris ral 7016', 249.99, 'DRIVEN METAUX'),
        ('REF0013', '', 'boite au lettre', 'Boite aux lettres DECAYEUX Pavillon n°2 en acier galvanisé.', 29.99, 'DRIVEN METAUX');
 
-INSERT INTO livrer (ref_article, Id_facturer, adresse_livraison, adresse_facturation)
+INSERT INTO livrer (ref_article, Id_facture, adresse_livraison, adresse_facturation)
 VALUES ('REF0001', 1, '20 rue du papier papercity 92200', '20 rue du papier papercity 92200'),
 	('REF0002', 2,'26 avenue des locomotives Coroncountry 59987', '26 avenue des locomotives Coroncountry 59987'),
        ('REf0003', 3,'11 rue des sports La Roche sur Yon 85100', '11 rue des sports La Roche sur Yon 85100'),

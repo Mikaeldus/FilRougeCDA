@@ -167,34 +167,34 @@ INSERT INTO `commercial` VALUES (1,'BETON','MAXIME','568549425','maxime.beton@gm
 UNLOCK TABLES;
 
 --
--- Table structure for table `facturer`
+-- Table structure for table `facture`
 --
 
-DROP TABLE IF EXISTS `facturer`;
+DROP TABLE IF EXISTS `facture`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `facturer` (
-  `Id_facturer` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `facture` (
+  `Id_facture` int(11) NOT NULL AUTO_INCREMENT,
   `num_facture` int(11) DEFAULT NULL,
   `fact_facture` varchar(50) DEFAULT NULL,
   `prixht_facture` decimal(15,2) DEFAULT NULL,
   `date_facture` date DEFAULT NULL,
   `prixttc_facture` decimal(15,2) DEFAULT NULL,
   `Id_com` int(11) NOT NULL,
-  PRIMARY KEY (`Id_facturer`),
+  PRIMARY KEY (`Id_facture`),
   UNIQUE KEY `Id_com` (`Id_com`),
-  CONSTRAINT `facturer_ibfk_1` FOREIGN KEY (`Id_com`) REFERENCES `commande` (`Id_com`)
+  CONSTRAINT `facture_ibfk_1` FOREIGN KEY (`Id_com`) REFERENCES `commande` (`Id_com`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `facturer`
+-- Dumping data for table `facture`
 --
 
-LOCK TABLES `facturer` WRITE;
-/*!40000 ALTER TABLE `facturer` DISABLE KEYS */;
-INSERT INTO `facturer` VALUES (1,101,'',145.00,'2014-02-14',131.00,1),(2,102,'',475.00,'2020-01-12',461.00,2),(3,103,'',146.00,'2019-11-10',135.00,3),(4,104,'',85.00,'2021-01-01',77.00,4),(5,105,'',47.00,'2018-05-18',44.00,5),(6,106,'',487.00,'2019-10-05',468.00,6);
-/*!40000 ALTER TABLE `facturer` ENABLE KEYS */;
+LOCK TABLES `facture` WRITE;
+/*!40000 ALTER TABLE `facture` DISABLE KEYS */;
+INSERT INTO `facture` VALUES (1,101,'',145.00,'2014-02-14',131.00,1),(2,102,'',475.00,'2020-01-12',461.00,2),(3,103,'',146.00,'2019-11-10',135.00,3),(4,104,'',85.00,'2021-01-01',77.00,4),(5,105,'',47.00,'2018-05-18',44.00,5),(6,106,'',487.00,'2019-10-05',468.00,6);
+/*!40000 ALTER TABLE `facture` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -264,13 +264,13 @@ DROP TABLE IF EXISTS `livrer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `livrer` (
   `ref_article` varchar(20) NOT NULL,
-  `Id_facturer` int(11) NOT NULL,
+  `Id_facture` int(11) NOT NULL,
   `adresse_livraison` varchar(50) DEFAULT NULL,
   `adresse_facturation` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`ref_article`,`Id_facturer`),
-  KEY `Id_facturer` (`Id_facturer`),
+  PRIMARY KEY (`ref_article`,`Id_facture`),
+  KEY `Id_facture` (`Id_facture`),
   CONSTRAINT `livrer_ibfk_1` FOREIGN KEY (`ref_article`) REFERENCES `article` (`ref_article`),
-  CONSTRAINT `livrer_ibfk_2` FOREIGN KEY (`Id_facturer`) REFERENCES `facturer` (`Id_facturer`)
+  CONSTRAINT `livrer_ibfk_2` FOREIGN KEY (`Id_facture`) REFERENCES `facture` (`Id_facture`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -402,4 +402,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-12 15:35:02
+-- Dump completed on 2021-01-12 16:26:39
