@@ -1,232 +1,135 @@
+CREATE DATABASE projet; USE projet;
+
 CREATE TABLE article(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   nom_article VARCHAR(30),
-   lib_article VARCHAR(30),
-   four_article DECIMAL(3,0),
    ref_article VARCHAR(20),
-   photo_article VARCHAR(5000),
-   PRIMARY KEY(id_article, prixht_article),
-   UNIQUE(ref_article)
+   photo_article VARCHAR(50),
+   nom_article VARCHAR(30),
+   lib_article VARCHAR(300),
+   prixht_article DECIMAL(15,2),
+   four_article VARCHAR(50),
+   PRIMARY KEY(ref_article)
 );
 
-CREATE TABLE catalogue(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   theme_article VARCHAR(30),
-   PRIMARY KEY(id_article, prixht_article),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article)
+CREATE TABLE rubrique(
+   ref_article VARCHAR(20),
+   theme_article VARCHAR(50),
+   PRIMARY KEY(ref_article),
+   FOREIGN KEY(ref_article) REFERENCES article(ref_article)
 );
 
 CREATE TABLE sous_rubrique(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   type_article VARCHAR(30),
-   PRIMARY KEY(id_article, prixht_article),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article)
+   ref_article VARCHAR(20),
+   type_retrait VARCHAR(50),
+   PRIMARY KEY(ref_article),
+   FOREIGN KEY(ref_article) REFERENCES article(ref_article)
 );
 
 CREATE TABLE stock(
-   id_stock DECIMAL(7,0),
+   id_stock INT AUTO_INCREMENT,
    min_stock DECIMAL(3,0),
    max_stock DECIMAL(6,0),
    reel_stock DECIMAL(6,0),
-   PRIMARY KEY(id_stock)
+   ref_article VARCHAR(20) NOT NULL,
+   PRIMARY KEY(id_stock),
+   UNIQUE(ref_article),
+   FOREIGN KEY(ref_article) REFERENCES article(ref_article)
+);
+
+
+CREATE TABLE fournisseur(
+   Id_fournisseur INT AUTO_INCREMENT,
+   nom_fournisseur VARCHAR(30),
+   adresse_fournisseur VARCHAR(50),
+   ville_fournisseur VARCHAR(20),
+   cp_fournisseur VARCHAR(5),
+   tel_fournisseur VARCHAR(10),
+   courriel_fournisseur VARCHAR(50),
+   pays_fournisseur VARCHAR(30),
+   categorie_fournisseur VARCHAR(50),
+   PRIMARY KEY(Id_fournisseur)
 );
 
 CREATE TABLE categorie(
-   id_cat DECIMAL(7,0),
-   pay_cat VARCHAR(30),
-   coef_cat DECIMAL(2,0),
-   lib_cat VARCHAR(30),
-   PRIMARY KEY(id_cat, pay_cat, coef_cat)
-);
-
-CREATE TABLE reglement(
-   id_regl DECIMAL(7,0),
-   date_regl DATE,
-   type_regl VARCHAR(20),
-   total_regl CURRENCY,
-   PRIMARY KEY(id_regl)
-);
-
-CREATE TABLE categorie_fournisseur(
-   id_cat_four DECIMAL(7,0),
-   lib_cat_four VARCHAR(30),
-   PRIMARY KEY(id_cat_four)
-);
-
-CREATE TABLE commande_fournisseur(
-   id_com_four DECIMAL(7,0),
-   bl_com_four VARCHAR(5000),
-   num_bl_com_four DECIMAL(15,0),
-   date_com_four DATE,
-   prixht_com_four CURRENCY,
-   PRIMARY KEY(id_com_four)
-);
-
-CREATE TABLE reglement_fournisseur(
-   id_regl_four DECIMAL(7,0),
-   date_regl_four DATE,
-   type_regl_four VARCHAR(20),
-   total_regl_four CURRENCY,
-   PRIMARY KEY(id_regl_four)
-);
-
-CREATE TABLE livraison_four(
-   id_liv_four DECIMAL(7,0),
-   date_liv_four DATE,
-   num_liv_four DECIMAL(15,0),
-   PRIMARY KEY(id_liv_four)
-);
-
-CREATE TABLE client(
-   id_client DECIMAL(7,0),
-   nom_client VARCHAR(30),
-   prenom_client VARCHAR(30),
-   adresse_client VARCHAR(30),
-   ville_client VARCHAR(20),
-   cp_client VARCHAR(5),
-   id_cat DECIMAL(7,0) NOT NULL,
-   pay_cat VARCHAR(30) NOT NULL,
-   coef_cat DECIMAL(2,0) NOT NULL,
-   PRIMARY KEY(id_client),
-   FOREIGN KEY(id_cat, pay_cat, coef_cat) REFERENCES categorie(id_cat, pay_cat, coef_cat)
+   Id_cat_client INT AUTO_INCREMENT,
+   lib_cat_client VARCHAR(30),
+   pay_cat_client VARCHAR(30),
+   coef_cat_client DECIMAL(2,0),
+   PRIMARY KEY(Id_cat_client)
 );
 
 CREATE TABLE commande(
-   id_com DECIMAL(7,0),
-   bl_com VARCHAR(5000),
+   Id_com INT AUTO_INCREMENT,
+   bl_com VARCHAR(50),
+   num_bl_com INT,
    date_com DATE,
-   prixht_com CURRENCY,
-   num_com DECIMAL(15,0),
-   id_client DECIMAL(7,0) NOT NULL,
-   PRIMARY KEY(id_com),
-   FOREIGN KEY(id_client) REFERENCES client(id_client)
+   totalprixht_com DECIMAL(15,0),
+   reduc_commercial_com DECIMAL(2,0),
+   PRIMARY KEY(Id_com)
 );
 
-CREATE TABLE commercial(
-   id_commercial DECIMAL(3,0),
-   nom_commercial VARCHAR(30),
-   prenom_commercial VARCHAR(30),
-   tel_commercial VARCHAR(10),
-   courriel_commercial VARCHAR(30),
-   id_client DECIMAL(7,0) NOT NULL,
-   PRIMARY KEY(id_commercial),
-   UNIQUE(id_client),
-   FOREIGN KEY(id_client) REFERENCES client(id_client)
-);
-
-CREATE TABLE fournisseur(
-   id_four DECIMAL(7,0),
-   nom_four VARCHAR(30),
-   adre_four VARCHAR(30),
-   ville_four VARCHAR(30),
-   cp_four VARCHAR(5),
-   tel_four VARCHAR(10),
-   courriel_four VARCHAR(30),
-   pays_four VARCHAR(30),
-   id_cat_four DECIMAL(7,0) NOT NULL,
-   PRIMARY KEY(id_four),
-   FOREIGN KEY(id_cat_four) REFERENCES categorie_fournisseur(id_cat_four)
-);
-
-CREATE TABLE compter(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   id_stock DECIMAL(7,0),
-   PRIMARY KEY(id_article, prixht_article, id_stock),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article),
-   FOREIGN KEY(id_stock) REFERENCES stock(id_stock)
-);
-
-CREATE TABLE acheter(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   id_client DECIMAL(7,0),
-   PRIMARY KEY(id_article, prixht_article, id_client),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article),
-   FOREIGN KEY(id_client) REFERENCES client(id_client)
-);
-
-CREATE TABLE commander(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   id_com DECIMAL(7,0),
-   id_liste DECIMAL(7,0),
-   quantite_article DECIMAL(4,0),
-   prixht_total_article CURRENCY,
-   PRIMARY KEY(id_article, prixht_article, id_com),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article),
-   FOREIGN KEY(id_com) REFERENCES commande(id_com)
+CREATE TABLE client(
+   Id_client INT AUTO_INCREMENT,
+   nom_client VARCHAR(30),
+   prenom_client VARCHAR(30),
+   adresse_client VARCHAR(50),
+   ville_client VARCHAR(20),
+   cp_client VARCHAR(5),
+   Id_cat_client INT NOT NULL,
+   PRIMARY KEY(Id_client),
+   FOREIGN KEY(Id_cat_client) REFERENCES categorie(Id_cat_client)
 );
 
 CREATE TABLE facturer(
-   id_client DECIMAL(7,0),
-   id_regl DECIMAL(7,0),
-   id_facture DECIMAL(7,0),
-   num_facture DECIMAL(15,0),
-   bl_facture VARCHAR(5000),
-   prix_facture CURRENCY,
+   Id_facturer INT AUTO_INCREMENT,
+   num_facture INT,
+   fact_facture VARCHAR(50),
+   prixht_facture DECIMAL(15,2),
    date_facture DATE,
-   PRIMARY KEY(id_client, id_regl),
-   FOREIGN KEY(id_client) REFERENCES client(id_client),
-   FOREIGN KEY(id_regl) REFERENCES reglement(id_regl)
+   prixttc_facture DECIMAL(15,2),
+   Id_com INT NOT NULL,
+   PRIMARY KEY(Id_facturer),
+   UNIQUE(Id_com),
+   FOREIGN KEY(Id_com) REFERENCES commande(Id_com)
 );
 
-CREATE TABLE donner(
-   id_commercial DECIMAL(3,0),
-   reduc_commercial DECIMAL(2,0),
-   id_com DECIMAL(7,0) NOT NULL,
-   PRIMARY KEY(id_commercial),
-   UNIQUE(id_com),
-   FOREIGN KEY(id_commercial) REFERENCES commercial(id_commercial),
-   FOREIGN KEY(id_com) REFERENCES commande(id_com)
+CREATE TABLE commercial(
+   Id_commercial INT AUTO_INCREMENT,
+   nom_commercial VARCHAR(30),
+   prenom_commercial VARCHAR(30),
+   tel_commercial VARCHAR(10),
+   courriel_commercial VARCHAR(50),
+   Id_client INT NOT NULL,
+   PRIMARY KEY(Id_commercial),
+   UNIQUE(Id_client),
+   FOREIGN KEY(Id_client) REFERENCES client(Id_client)
 );
 
-CREATE TABLE etablir(
-   id_four DECIMAL(7,0),
-   id_regl_four DECIMAL(7,0),
-   id_liv_four DECIMAL(7,0),
-   id_fact_four DECIMAL(7,0),
-   bl_fact_four VARCHAR(5000),
-   num_bl_fact_four DECIMAL(15,0),
-   prix_fact_four CURRENCY,
-   date_fact_four DATE,
-   PRIMARY KEY(id_four, id_regl_four, id_liv_four),
-   FOREIGN KEY(id_four) REFERENCES fournisseur(id_four),
-   FOREIGN KEY(id_regl_four) REFERENCES reglement_fournisseur(id_regl_four),
-   FOREIGN KEY(id_liv_four) REFERENCES livraison_four(id_liv_four)
+CREATE TABLE fournir(
+   Id_fournisseur INT,
+   Id_com INT,
+   PRIMARY KEY(Id_fournisseur, Id_com),
+   FOREIGN KEY(Id_fournisseur) REFERENCES fournisseur(Id_fournisseur),
+   FOREIGN KEY(Id_com) REFERENCES commande(Id_com)
 );
 
-CREATE TABLE demander(
-   id_four DECIMAL(7,0),
-   id_com_four DECIMAL(7,0),
-   PRIMARY KEY(id_four, id_com_four),
-   FOREIGN KEY(id_four) REFERENCES fournisseur(id_four),
-   FOREIGN KEY(id_com_four) REFERENCES commande_fournisseur(id_com_four)
+
+CREATE TABLE livrer(
+   ref_article VARCHAR(20),
+   Id_facturer INT,
+   adresse_livraison VARCHAR(50),
+   adresse_facturation VARCHAR(50),
+   PRIMARY KEY(ref_article, Id_facturer),
+   FOREIGN KEY(ref_article) REFERENCES article(ref_article),
+   FOREIGN KEY(Id_facturer) REFERENCES facturer(Id_facturer)
 );
 
-CREATE TABLE envoyer(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   id_com_four DECIMAL(7,0),
-   id_liste_article_four DECIMAL(7,0),
-   quantite_article_four DECIMAL(15,0),
-   prixht_total_article_four CURRENCY,
-   PRIMARY KEY(id_article, prixht_article, id_com_four),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article),
-   FOREIGN KEY(id_com_four) REFERENCES commande_fournisseur(id_com_four)
+CREATE TABLE passer(
+   ref_article VARCHAR(20),
+   Id_client INT,
+   Id_com INT,
+   PRIMARY KEY(ref_article, Id_client, Id_com),
+   FOREIGN KEY(ref_article) REFERENCES article(ref_article),
+   FOREIGN KEY(Id_client) REFERENCES client(Id_client),
+   FOREIGN KEY(Id_com) REFERENCES commande(Id_com)
 );
 
-CREATE TABLE rajouter(
-   id_article DECIMAL(7,0),
-   prixht_article CURRENCY,
-   quantite_liv_depot DECIMAL(15,0),
-   nombre_piece_liv_depot DECIMAL(15,0),
-   total_prix_quant_liv_depot CURRENCY,
-   id_liv_four DECIMAL(7,0) NOT NULL,
-   PRIMARY KEY(id_article, prixht_article),
-   FOREIGN KEY(id_article, prixht_article) REFERENCES article(id_article, prixht_article),
-   FOREIGN KEY(id_liv_four) REFERENCES livraison_four(id_liv_four)
-);

@@ -1,0 +1,42 @@
+Sauvegarde et restauration sous MySql/MariaDb
+
+Sauvegarde
+
+Avant de commencer, il faut impérativement définir un mot de passe pour l'utilisateur (root). Ouvrir HeidiSQL > Outils > Gestionnaire utilisateur > onglet Autorisations. Cliquez sur l'utilisateur root (à droite) et dans le formulaire saisir le mot de passe souhaité (mettez le même à tous) dans les deux champs puis cliquez sur Enregistrer. Répétez l'opération pour tous les utilisateurs root affichés.
+
+Créer un répertoire nommé backup sur le disque partagé sur Git Hub (on aura donc C:\Users\Mikael\Desktop\Projet CDA\FilRougeCDA\BACK\BDD\SQL\Backup).
+
+Lancer l'invite de commande Windows : touche Windows + R ou bien saisir cmd dans la zone de recherche de la barre des tâches (Cortana)
+
+Se positionner dans le répertoire bin du répertoire d'installation de MariaDB en tapant la commande :
+
+cd C:\Program Files\MariaDB 10.2\bin
+
+Le répertoire et la version peuvent varier, il faut indiquer le chemin du répertoire dans lequel se trouve le fichier exécutable mysqldump.exe
+
+Pour effectuer la sauvegarde (ou « dump »), saisir la commande :
+
+  mysqldump --user=root --password=0000 --databases projet > C:\Users\Mikael\Desktop\projetCDA\FilRougeCDA\BACK\BDD\SQL\Backup\backup_projet.sql
+L'option --databases est suivie du nom de la base à sauvegarder
+
+Après le chevron vers la droite (>), on indique le chemin complet et le nom du fichier de sauvegarde
+Il existe de nombreuses options de sauvegarde, qui permettent d'indiquer par exemple que l'on souhaite sauvegarder uniquement la structure des tables ou les données, ajouter des instructions IF EXISTS etc.
+
+Restauration
+Pour restaurer, on va utiliser la commande mysql (et non plus mysqldump).
+
+Par précaution, on va renommer la base papyrus déjà créée; elle existera donc sous un autre nom. Dans HeidiSQL, clic droit sur le nom de la base papyrus (colonne de droite) > Edition puis sai-sir le nouveau nom : papyrus_renamed, cliquez sur OK.
+
+Répétez les opération 3 et 4 de la sauvegarde.
+
+Pour la restauration, on va utiliser la commande mysql (exécutable mysql.exe situé lui aussi dans C:\Program Files\MariaDB 10.2\bin) et non plus mysqldump.
+
+Exécutez la commande suivante :
+
+mysql --user=root --password=0000 projet < C:\Users\Mikael\Desktop\projetCDA\FilRougeCDA\BACK\BDD\SQL\Backup\backup_projet.sql
+Explications :
+
+On se connecte avec l’utilisateur root et son mot de passe ;
+On indique ensuite le nom que prendra la base de données restaurée (qui pourra être celui d'origine, mais des dans ce cas il pourra y avoir des erreurs ou pas selon que des instructions DROP/CREATE…IF EXISTS sont contenues dans le fichier de sauvegarde)
+Notez le chevron vers la gauche cette fois
+Enfin, on indique le chemin vers le fichier de sauvegarde

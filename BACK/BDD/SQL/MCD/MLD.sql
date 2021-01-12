@@ -1,0 +1,13 @@
+article = (ref_article VARCHAR(20), photo_article VARCHAR(50), nom_article VARCHAR(30), lib_article VARCHAR(30), prixht_article DECIMAL(15,2), four_article VARCHAR(50));
+rubrique = (#ref_article, theme_article VARCHAR(50));
+sous_rubrique = (#ref_article, type_retrait VARCHAR(50));
+stock = (id_stock DECIMAL(7,0), min_stock DECIMAL(3,0), max_stock DECIMAL(6,0), reel_stock DECIMAL(6,0), #ref_article);
+fournisseur = (Id_fournisseur INT, nom_fournisseur VARCHAR(30), adresse_fournisseur VARCHAR(50), ville_fournisseur VARCHAR(20), cp_fournisseur VARCHAR(5), tel_fournisseur VARCHAR(10), courriel_fournisseur VARCHAR(50), pays_fournisseur VARCHAR(30), categorie_fournisseur VARCHAR(50));
+categorie = (Id_cat_client INT, lib_cat_client VARCHAR(30), pay_lib_client VARCHAR(30), coef_cat_client DECIMAL(2,0));
+commande = (Id_com INT, bl_com VARCHAR(50), num_bl_com INT, date_com DATE, totalprixht_com DECIMAL(15,0), reduc_commercial_com DECIMAL(2,0));
+client = (Id_client INT, nom_client VARCHAR(30), prenom_client VARCHAR(30), adresse_client VARCHAR(50), ville_client VARCHAR(20), cp_client VARCHAR(5), #Id_cat_client);
+facturer = (Id_facturer INT, num_facture INT, fact_facture VARCHAR(50), prixht_facture DECIMAL(15,2), date_facture DATE, prixttc_facture DECIMAL(15,2), #Id_com);
+commercial = (Id_commercial INT, nom_commercial VARCHAR(30), prenom_commercial VARCHAR(30), tel_commercial VARCHAR(10), courriel_commercial VARCHAR(50), #Id_client);
+livrer = (#ref_article, #Id_facturer, adresse_livraison VARCHAR(50), adresse_facturation VARCHAR(50));
+passer = (#ref_article, #Id_client, #Id_com);
+fournir = (#Id_fournisseur, #Id_com);
